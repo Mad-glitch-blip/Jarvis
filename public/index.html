@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#030507" />
+  <title>JARVIS AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="interface">
+    <header class="top-bar">
+      <div class="system-status">
+        <span class="status-light"></span>
+        <span id="system-status">SYSTEM ONLINE</span>
+      </div>
+      <div class="brand-label">
+        <span class="small-line"></span>
+        <span>JARVIS AI</span>
+      </div>
+    </header>
+
+    <section class="core-section">
+      <div class="core-wrapper">
+        <div class="orbit orbit-outer"></div>
+        <div class="orbit orbit-middle"></div>
+        <div class="core-ring">
+          <button class="core-button" id="core-button" type="button" aria-label="Open JARVIS chat"
+            title="Open JARVIS chat">
+            <span class="core-letter">V</span>
+          </button>
+        </div>
+        <div class="signal signal-left"></div>
+        <div class="signal signal-right"></div>
+      </div>
+      <div class="assistant-name">J A R V I S</div>
+      <div class="name-underline"></div>
+      <p class="instruction" id="instruction">CLICK THE CORE TO ACTIVATE</p>
+      <p class="jarvis-subtitle" id="jarvis-subtitle" aria-live="polite"></p>
+    </section>
+
+    <footer class="bottom-bar">
+      <div class="ready-label">
+        <span class="small-line"></span>
+        <span id="ready-status">READY</span>
+      </div>
+      <div class="version-label">
+        <span class="small-line"></span>
+        <span>V 1.3</span>
+      </div>
+    </footer>
+  </main>
+
+  <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="Open recent conversations"
+    aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <button id="sidebar-backdrop" class="sidebar-backdrop" type="button" aria-label="Close recent conversations"
+    hidden></button>
+
+  <aside id="history-sidebar" class="history-sidebar" aria-hidden="true">
+    <header class="sidebar-header">
+      <span class="sidebar-title">JARVIS ARCHIVE</span>
+      <button id="close-sidebar" class="icon-button" type="button" aria-label="Close sidebar">×</button>
+    </header>
+
+    <button id="new-chat-button" class="new-chat-button" type="button">
+      <span aria-hidden="true">+</span><span>New chat</span>
+    </button>
+
+    <p class="history-heading">Recent conversations</p>
+    <div id="recent-list" class="recent-list">
+      <p class="history-empty">Loading conversations…</p>
+    </div>
+    <footer class="sidebar-footer">STORED LOCALLY · SQLITE</footer>
+  </aside>
+
+  <section class="chat-panel" id="chat-panel" aria-label="JARVIS chat" hidden>
+    <header class="chat-header">
+      <div class="chat-heading">
+        <span class="chat-title">JARVIS</span>
+        <span class="chat-subtitle" id="chat-subtitle">LOCAL ASSISTANT</span>
+      </div>
+      <button id="close-chat" class="icon-button" type="button" aria-label="Close chat">×</button>
+    </header>
+
+    <div class="chat-messages" id="chat-messages" aria-live="polite">
+      <p class="jarvis-message">JARVIS: Systems online. How may I assist you?</p>
+    </div>
+
+    <form id="chat-form" class="chat-input">
+      <input id="user-input" type="text" placeholder="Message JARVIS…" autocomplete="off" maxlength="8000" required />
+      <button id="send-button" type="submit">SEND</button>
+    </form>
+
+    <div class="chat-tools">
+      <button id="owner-mode-button" type="button">OWNER MODE</button>
+      <button id="app-scan-button" type="button">SCAN</button>
+      <button id="website-button" type="button">OPEN SITE</button>
+      <button id="terminal-button" type="button">OWNER CONSOLE</button>
+    </div>
+    <div class="chat-footnote">SAY “HEY JARVIS” · LOCAL MODEL · STAYS ON THIS PC</div>
+  </section>
+
+  <section id="owner-panel" class="utility-panel" hidden aria-label="Owner access">
+    <header class="utility-header">
+      <div>
+        <span class="chat-title">OWNER ACCESS</span>
+        <span class="chat-subtitle">WINDOWS HELLO / PASSKEY</span>
+      </div>
+      <button id="owner-close" class="icon-button" type="button" aria-label="Close owner access">×</button>
+    </header>
+    <p id="owner-description" class="utility-copy">
+      Set up Windows Hello once. Use http://localhost:3000 in your browser.
+    </p>
+    <label class="utility-label" for="owner-setup-code">
+      One-time setup code (first setup only)
+    </label>
+    <input id="owner-setup-code" class="utility-input" type="password" autocomplete="off"
+      placeholder="Code from server terminal" />
+    <button id="owner-auth-button" class="utility-primary" type="button">
+      SET UP WINDOWS HELLO
+    </button>
+    <button id="owner-lock-button" class="utility-secondary" type="button" hidden>
+      LOCK OWNER MODE
+    </button>
+    <p id="owner-status" class="utility-status" role="status"></p>
+  </section>
+
+  <section id="apps-panel" class="utility-panel" hidden aria-label="App scanner">
+    <header class="utility-header">
+      <div>
+        <span class="chat-title">APP SCANNER</span>
+        <span class="chat-subtitle">OWNER MODE REQUIRED</span>
+      </div>
+      <button id="apps-close" class="icon-button" type="button" aria-label="Close app scanner">×</button>
+    </header>
+
+    <p class="utility-copy">
+      Search shortcuts in your Start Menu and Desktop. Nothing launches without your confirmation.
+    </p>
+
+    <form id="apps-search-form" class="apps-search-form">
+      <input id="apps-search-input" class="utility-input" type="search" maxlength="100"
+        placeholder="Search apps or leave empty for all…" autocomplete="off" aria-label="Search apps and shortcuts" />
+      <button id="scan-again-button" class="utility-primary" type="submit">
+        SCAN
+      </button>
+    </form>
+
+    <p id="apps-scan-status" class="utility-copy" role="status">
+      Press SCAN to find shortcuts.
+    </p>
+    <div id="apps-results" class="utility-results"></div>
+  </section>
+
+  <section id="terminal-panel" class="utility-panel terminal-panel" hidden aria-label="Restricted PowerShell console">
+    <header class="utility-header">
+      <div>
+        <span class="chat-title">OWNER CONSOLE</span>
+        <span class="chat-subtitle">RESTRICTED POWERSHELL</span>
+      </div>
+      <button id="terminal-close" class="icon-button" type="button" aria-label="Close terminal">×</button>
+    </header>
+    <p class="utility-copy">
+      This console accepts approved read-only commands only.
+    </p>
+    <pre id="terminal-output" class="terminal-output">JARVIS Owner Console. Type help to list approved commands.</pre>
+    <form id="terminal-form" class="terminal-form">
+      <span>PS JARVIS&gt;</span>
+      <input id="terminal-command" autocomplete="off" spellcheck="false" placeholder="help" required />
+      <button type="submit">RUN</button>
+    </form>
+  </section>
+
+  <div id="action-toast" class="action-toast" role="status" aria-live="polite"></div>
+  <script src="script.js" defer></script>
+</body>
+
+</html>
