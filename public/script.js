@@ -1272,3 +1272,69 @@ loadLatestConversation();
 
 setSubtitle("SAY  HEY JARVIS", "idle");
 setTimeout(() => startJarvisEar(), 900);
+
+/* ——— Interactive core + cursor field ——— */
+
+(function initCoreInteraction() {
+    const wrap = document.getElementById("core-wrapper");
+    const field = document.getElementById("cursor-field");
+    if (!wrap) return;
+
+    let raf = 0;
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+
+    function onMove(e) {
+        const rect = wrap.getBoundingClientRect();
+        const midX = rect.left + rect.width / 2;
+        const midY = rect.top + rect.height / 2;
+        const dx = (e.clientX - midX) / rect.width;
+        const dy = (e.clientY - midY) / rect.height;
+
+        // parallax tilt (subtle)
+        tx = dx * 8;
+        ty = dy * 6;
+
+        // proximity heat
+        const dist = Math.hypot(dx, dy);
+        wrap.classList.toggle("is-hot", dist < 0.85);
+
+        if (field) {
+            field.classList.add("is-on");
+            cx = e.clientX;
+            cy = e.clientY;
+        }
+
+        if (!raf) raf = requestAnimationFrame(apply);
+    }
+
+    function apply() {
+        raf = 0;
+        wrap.style.transform =
+            `translate(${tx * 0.35}px, ${ty * 0.35}px) rotateX(${-ty * 0.9}deg) rotateY(${tx * 0.9}deg)`;
+        if (field) {
+            field.style.transform = `translate(${cx}px, ${cy}px)`;
+        }
+    }
+
+    function onLeave() {
+        tx = 0;
+        ty = 0;
+        wrap.classList.remove("is-hot");
+        wrap.style.transform = "";
+        if (field) field.classList.remove("is-on");
+    }
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    wrap.addEventListener("mouseleave", onLeave);
+
+    // Tie body classes to existing chat open state
+    const _setChatOpen = setChatOpen;
+    setChatOpen = function (open) {
+        _setChatOpen(open);
+        document.body.classList.toggle("chat-open", open);
+        document.body.classList.toggle("core-live", open);
+    };
+})();

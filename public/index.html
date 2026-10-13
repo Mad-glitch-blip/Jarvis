@@ -10,6 +10,11 @@
 </head>
 
 <body>
+  <div class="stage-glow" aria-hidden="true"></div>
+  <div class="scan-beam" aria-hidden="true"></div>
+  <div class="cursor-field" id="cursor-field" aria-hidden="true"></div>
+  <div class="grid-floor" aria-hidden="true"></div>
+
   <main class="interface">
     <header class="top-bar">
       <div class="system-status">
@@ -23,13 +28,15 @@
     </header>
 
     <section class="core-section">
-      <div class="core-wrapper">
+      <div class="core-wrapper" id="core-wrapper">
         <div class="orbit orbit-outer"></div>
         <div class="orbit orbit-middle"></div>
+        <div class="orbit orbit-inner"></div>
         <div class="core-ring">
           <button class="core-button" id="core-button" type="button" aria-label="Open JARVIS chat"
             title="Open JARVIS chat">
             <span class="core-letter">V</span>
+            <span class="core-ripple" aria-hidden="true"></span>
           </button>
         </div>
         <div class="signal signal-left"></div>
@@ -48,7 +55,7 @@
       </div>
       <div class="version-label">
         <span class="small-line"></span>
-        <span>V 1.3</span>
+        <span>V 1.4</span>
       </div>
     </footer>
   </main>
@@ -82,7 +89,7 @@
     <header class="chat-header">
       <div class="chat-heading">
         <span class="chat-title">JARVIS</span>
-        <span class="chat-subtitle" id="chat-subtitle">LOCAL ASSISTANT</span>
+        <span class="chat-subtitle" id="chat-subtitle">LOCAL ASSISTANT · FISH VOICE</span>
       </div>
       <button id="close-chat" class="icon-button" type="button" aria-label="Close chat">×</button>
     </header>
